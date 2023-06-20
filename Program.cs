@@ -1,52 +1,65 @@
 using System;
 
-class Stack<T>
+class Queue<T>
 {
     private T[] elements;
-    private int top;
+    private int front;
+    private int rear;
+    private int count;
 
-    public int Count { get { return top + 1; } }
+    public int Count { get { return count; } }
 
-    public Stack(int capacity)
+    public Queue(int capacity)
     {
         elements = new T[capacity];
-        top = -1;
+        front = 0;
+        rear = -1;
+        count = 0;
     }
 
-    public void Push(T item)
+    public void Enqueue(T item)
     {
-        if (top == elements.Length - 1)
+        if (count == elements.Length)
         {
-            throw new StackOverflowException("Stack is full");
+            Console.WriteLine("Queue is full");
+            return;
         }
 
-        elements[++top] = item;
+        rear = (rear + 1) % elements.Length;
+        elements[rear] = item;
+        count++;
     }
 
-    public T Pop()
+    public T Dequeue()
     {
-        if (top == -1)
+        if (count == 0)
         {
-            throw new InvalidOperationException("Stack is empty");
+            Console.WriteLine("Queue is empty");
+            return default(T);
         }
 
-        T item = elements[top--];
+        T item = elements[front];
+        front = (front + 1) % elements.Length;
+        count--;
         return item;
     }
 
     public T Peek()
     {
-        if (top == -1)
+        if (count == 0)
         {
-            throw new InvalidOperationException("Stack is empty");
+            Console.WriteLine("Queue is empty");
+            return default(T);
         }
 
-        return elements[top];
+        return elements[front];
     }
 
     public void Clear()
     {
-        top = -1;
+        front = 0;
+        rear = -1;
+        count = 0;
     }
 }
 
@@ -54,18 +67,23 @@ class Program
 {
     static void Main()
     {
-        Stack<int> stack = new Stack<int>(5);
-        stack.Push(10);
-        stack.Push(20);
-        stack.Push(30);
-        stack.Push(40);
+        Queue<int> queue = new Queue<int>(5);
+        queue.Enqueue(10);
+        queue.Enqueue(20);
+        queue.Enqueue(30);
+        queue.Enqueue(40);
 
-        Console.WriteLine("Count: " + stack.Count);
-        Console.WriteLine("Peek: " + stack.Peek());
+        Console.WriteLine("Count: " + queue.Count);
 
-        Console.WriteLine("Pop: " + stack.Pop());
-        Console.WriteLine("Pop: " + stack.Pop());
+        if (queue.Count > 0)
+        {
+            Console.WriteLine("Peek: " + queue.Peek());
 
-        Console.WriteLine("Count: " + stack.Count);
+            Console.WriteLine("Dequeue: " + queue.Dequeue());
+            Console.WriteLine("Dequeue: " + queue.Dequeue());
+        }
+
+        Console.WriteLine("Count: " + queue.Count);
     }
 }
+
