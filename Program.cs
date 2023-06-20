@@ -26,7 +26,6 @@ class Program
         // Delete (Dequeue) operation
         int removedElement = queue.Dequeue();
         Console.WriteLine("Removed element from the queue: " + removedElement);
-
         // Read updated queue
         Console.WriteLine("Updated queue elements: ");
         foreach (int item in queue)
