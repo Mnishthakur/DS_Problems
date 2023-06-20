@@ -1,36 +1,70 @@
 using System;
-using System.Collections.Generic;
+
+class Node
+{
+    public int Data;
+    public Node Next;
+
+    public Node(int data)
+    {
+        Data = data;
+        Next = null;
+    }
+}
+
+class LinkedList
+{
+    private Node head;
+
+    public void InsertSorted(int data)
+    {
+        Node newNode = new Node(data);
+
+        if (head == null || data > head.Data)
+        {
+            newNode.Next = head;
+            head = newNode;
+        }
+        else
+        {
+            Node current = head;
+
+            while (current.Next != null && current.Next.Data > data)
+            {
+                current = current.Next;
+            }
+
+            newNode.Next = current.Next;
+            current.Next = newNode;
+        }
+    }
+
+    public void Display()
+    {
+        Node current = head;
+
+        while (current != null)
+        {
+            Console.Write(current.Data + " ");
+            current = current.Next;
+        }
+
+        Console.WriteLine();
+    }
+}
 
 class Program
 {
     static void Main(string[] args)
     {
-        Queue<int> queue = new Queue<int>();
+        LinkedList linkedList = new LinkedList();
 
-        // Create (Enqueue) operation
-        queue.Enqueue(10);
-        queue.Enqueue(20);
-        queue.Enqueue(30);
+        linkedList.InsertSorted(40);
+        linkedList.InsertSorted(20);
+        linkedList.InsertSorted(30);
+        linkedList.InsertSorted(10);
+        linkedList.InsertSorted(50);
 
-        // Read operation
-        Console.WriteLine("Queue elements: ");
-        foreach (int item in queue)
-        {
-            Console.WriteLine(item);
-        }
-
-        // Update (Peek) operation
-        int firstElement = queue.Peek();
-        Console.WriteLine("First element in the queue: " + firstElement);
-
-        // Delete (Dequeue) operation
-        int removedElement = queue.Dequeue();
-        Console.WriteLine("Removed element from the queue: " + removedElement);
-        // Read updated queue
-        Console.WriteLine("Updated queue elements: ");
-        foreach (int item in queue)
-        {
-            Console.WriteLine(item);
-        }
+        linkedList.Display();
     }
 }
