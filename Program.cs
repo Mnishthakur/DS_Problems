@@ -5,45 +5,44 @@ class Program
 {
     static void Main()
     {
-        LinkedList<string> linkedList = new LinkedList<string>();
+        Stack<string> stack = new Stack<string>();
 
-        // Create: Add elements to the LinkedList
-        linkedList.AddLast("Apple");
-        linkedList.AddLast("Banana");
-        linkedList.AddLast("Orange");
+        // Create: Push elements to the Stack
+        stack.Push("Apple");
+        stack.Push("Banana");
+        stack.Push("Orange");
 
-        // Read: Display elements in the LinkedList
-        Console.WriteLine("Elements in the LinkedList:");
-        foreach (var item in linkedList)
+        // Read: Display elements in the Stack
+        Console.WriteLine("Elements in the Stack:");
+        foreach (var item in stack)
         {
             Console.WriteLine(item);
         }
 
-        // Update: Modify an element in the LinkedList
-        LinkedListNode<string> nodeToModify = linkedList.Find("Banana");
-        if (nodeToModify != null)
+        // Update: Modify the top element in the Stack
+        if (stack.Count > 0)
         {
-            linkedList.AddAfter(nodeToModify, "Mango");
-            linkedList.Remove(nodeToModify);
+            string topElement = stack.Pop();
+            stack.Push(topElement + " (Updated)");
         }
 
         // Read: Display elements after modification
-        Console.WriteLine("\nElements in the LinkedList after modification:");
-        foreach (var item in linkedList)
+        Console.WriteLine("\nElements in the Stack after modification:");
+        foreach (var item in stack)
         {
             Console.WriteLine(item);
         }
 
-        // Delete: Remove an element from the LinkedList
-        LinkedListNode<string> nodeToDelete = linkedList.Find("Orange");
-        if (nodeToDelete != null)
+        // Delete: Remove an element from the Stack
+        if (stack.Count > 0)
         {
-            linkedList.Remove(nodeToDelete);
+            string removedElement = stack.Pop();
+            Console.WriteLine("\nRemoved element: " + removedElement);
         }
 
         // Read: Display elements after deletion
-        Console.WriteLine("\nElements in the LinkedList after deletion:");
-        foreach (var item in linkedList)
+        Console.WriteLine("\nElements in the Stack after deletion:");
+        foreach (var item in stack)
         {
             Console.WriteLine(item);
         }
