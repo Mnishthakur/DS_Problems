@@ -3,46 +3,33 @@ using System.Collections.Generic;
 
 class Program
 {
-    static void Main()
+    static void Main(string[] args)
     {
-        Stack<string> stack = new Stack<string>();
+        Queue<int> queue = new Queue<int>();
 
-        // Create: Push elements to the Stack
-        stack.Push("Apple");
-        stack.Push("Banana");
-        stack.Push("Orange");
+        // Create (Enqueue) operation
+        queue.Enqueue(10);
+        queue.Enqueue(20);
+        queue.Enqueue(30);
 
-        // Read: Display elements in the Stack
-        Console.WriteLine("Elements in the Stack:");
-        foreach (var item in stack)
+        // Read operation
+        Console.WriteLine("Queue elements: ");
+        foreach (int item in queue)
         {
             Console.WriteLine(item);
         }
 
-        // Update: Modify the top element in the Stack
-        if (stack.Count > 0)
-        {
-            string topElement = stack.Pop();
-            stack.Push(topElement + " (Updated)");
-        }
+        // Update (Peek) operation
+        int firstElement = queue.Peek();
+        Console.WriteLine("First element in the queue: " + firstElement);
 
-        // Read: Display elements after modification
-        Console.WriteLine("\nElements in the Stack after modification:");
-        foreach (var item in stack)
-        {
-            Console.WriteLine(item);
-        }
+        // Delete (Dequeue) operation
+        int removedElement = queue.Dequeue();
+        Console.WriteLine("Removed element from the queue: " + removedElement);
 
-        // Delete: Remove an element from the Stack
-        if (stack.Count > 0)
-        {
-            string removedElement = stack.Pop();
-            Console.WriteLine("\nRemoved element: " + removedElement);
-        }
-
-        // Read: Display elements after deletion
-        Console.WriteLine("\nElements in the Stack after deletion:");
-        foreach (var item in stack)
+        // Read updated queue
+        Console.WriteLine("Updated queue elements: ");
+        foreach (int item in queue)
         {
             Console.WriteLine(item);
         }
