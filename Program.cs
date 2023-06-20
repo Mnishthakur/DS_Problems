@@ -1,49 +1,52 @@
 using System;
 
-class LinkedListNode<T>
+class Stack<T>
 {
-    public T Value { get; set; }
-    public LinkedListNode<T> Next { get; set; }
+    private T[] elements;
+    private int top;
 
-    public LinkedListNode(T value)
+    public int Count { get { return top + 1; } }
+
+    public Stack(int capacity)
     {
-        Value = value;
-        Next = null;
-    }
-}
-
-class LinkedList<T>
-{
-    private LinkedListNode<T> head;
-
-    public void Add(T value)
-    {
-        LinkedListNode<T> newNode = new LinkedListNode<T>(value);
-
-        if (head == null)
-        {
-            head = newNode;
-        }
-        else
-        {
-            LinkedListNode<T> currentNode = head;
-            while (currentNode.Next != null)
-            {
-                currentNode = currentNode.Next;
-            }
-            currentNode.Next = newNode;
-        }
+        elements = new T[capacity];
+        top = -1;
     }
 
-    public void Display()
+    public void Push(T item)
     {
-        LinkedListNode<T> currentNode = head;
-        while (currentNode != null)
+        if (top == elements.Length - 1)
         {
-            Console.Write(currentNode.Value + " ");
-            currentNode = currentNode.Next;
+            throw new StackOverflowException("Stack is full");
         }
-        Console.WriteLine();
+
+        elements[++top] = item;
+    }
+
+    public T Pop()
+    {
+        if (top == -1)
+        {
+            throw new InvalidOperationException("Stack is empty");
+        }
+
+        T item = elements[top--];
+        return item;
+    }
+
+    public T Peek()
+    {
+        if (top == -1)
+        {
+            throw new InvalidOperationException("Stack is empty");
+        }
+
+        return elements[top];
+    }
+
+    public void Clear()
+    {
+        top = -1;
     }
 }
 
@@ -51,11 +54,18 @@ class Program
 {
     static void Main()
     {
-        LinkedList<int> linkedList = new LinkedList<int>();
-        linkedList.Add(10);
-        linkedList.Add(20);
-        linkedList.Add(30);
-        linkedList.Add(40);
-        linkedList.Display();
+        Stack<int> stack = new Stack<int>(5);
+        stack.Push(10);
+        stack.Push(20);
+        stack.Push(30);
+        stack.Push(40);
+
+        Console.WriteLine("Count: " + stack.Count);
+        Console.WriteLine("Peek: " + stack.Peek());
+
+        Console.WriteLine("Pop: " + stack.Pop());
+        Console.WriteLine("Pop: " + stack.Pop());
+
+        Console.WriteLine("Count: " + stack.Count);
     }
 }
