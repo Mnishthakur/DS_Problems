@@ -1,89 +1,51 @@
 using System;
-
-class Queue<T>
-{
-    private T[] elements;
-    private int front;
-    private int rear;
-    private int count;
-
-    public int Count { get { return count; } }
-
-    public Queue(int capacity)
-    {
-        elements = new T[capacity];
-        front = 0;
-        rear = -1;
-        count = 0;
-    }
-
-    public void Enqueue(T item)
-    {
-        if (count == elements.Length)
-        {
-            Console.WriteLine("Queue is full");
-            return;
-        }
-
-        rear = (rear + 1) % elements.Length;
-        elements[rear] = item;
-        count++;
-    }
-
-    public T Dequeue()
-    {
-        if (count == 0)
-        {
-            Console.WriteLine("Queue is empty");
-            return default(T);
-        }
-
-        T item = elements[front];
-        front = (front + 1) % elements.Length;
-        count--;
-        return item;
-    }
-
-    public T Peek()
-    {
-        if (count == 0)
-        {
-            Console.WriteLine("Queue is empty");
-            return default(T);
-        }
-
-        return elements[front];
-    }
-
-    public void Clear()
-    {
-        front = 0;
-        rear = -1;
-        count = 0;
-    }
-}
+using System.Collections.Generic;
 
 class Program
 {
     static void Main()
     {
-        Queue<int> queue = new Queue<int>(5);
-        queue.Enqueue(10);
-        queue.Enqueue(20);
-        queue.Enqueue(30);
-        queue.Enqueue(40);
+        LinkedList<string> linkedList = new LinkedList<string>();
 
-        Console.WriteLine("Count: " + queue.Count);
+        // Create: Add elements to the LinkedList
+        linkedList.AddLast("Apple");
+        linkedList.AddLast("Banana");
+        linkedList.AddLast("Orange");
 
-        if (queue.Count > 0)
+        // Read: Display elements in the LinkedList
+        Console.WriteLine("Elements in the LinkedList:");
+        foreach (var item in linkedList)
         {
-            Console.WriteLine("Peek: " + queue.Peek());
-
-            Console.WriteLine("Dequeue: " + queue.Dequeue());
-            Console.WriteLine("Dequeue: " + queue.Dequeue());
+            Console.WriteLine(item);
         }
 
-        Console.WriteLine("Count: " + queue.Count);
+        // Update: Modify an element in the LinkedList
+        LinkedListNode<string> nodeToModify = linkedList.Find("Banana");
+        if (nodeToModify != null)
+        {
+            linkedList.AddAfter(nodeToModify, "Mango");
+            linkedList.Remove(nodeToModify);
+        }
+
+        // Read: Display elements after modification
+        Console.WriteLine("\nElements in the LinkedList after modification:");
+        foreach (var item in linkedList)
+        {
+            Console.WriteLine(item);
+        }
+
+        // Delete: Remove an element from the LinkedList
+        LinkedListNode<string> nodeToDelete = linkedList.Find("Orange");
+        if (nodeToDelete != null)
+        {
+            linkedList.Remove(nodeToDelete);
+        }
+
+        // Read: Display elements after deletion
+        Console.WriteLine("\nElements in the LinkedList after deletion:");
+        foreach (var item in linkedList)
+        {
+            Console.WriteLine(item);
+        }
     }
 }
-
